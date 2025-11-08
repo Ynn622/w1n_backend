@@ -1,0 +1,29 @@
+from fastapi import APIRouter, HTTPException
+from fastapi.responses import JSONResponse
+
+from util.nowtime import getTaiwanTime
+
+router = APIRouter(prefix="/issue", tags=["障礙回報"])
+
+@router.post("/create", response_class=JSONResponse)
+def create_issue(address: str, obstacle_type: str, description: str):
+    from functions.report import insert_issue
+    insert_issue(
+        address=address,
+        obstacle_type=obstacle_type,
+        description=description,
+        time=getTaiwanTime()
+    )
+    return '回報成功'
+
+@router.get("/getByTime", response_class=JSONResponse)
+def get_issues_by_time(hours: int = 24):
+    from functions.report import read_issues_by_time
+    issues = read_issues_by_time(hours=hours)
+    return issues
+
+@router.get("/getByStatus", response_class=JSONResponse)
+def get_issues_by_status(status: str = "Unsolved"):
+    from functions.report import read_issues_by_status
+    issues = read_issues_by_status(status=status)
+    return issues

@@ -1,7 +1,7 @@
 from zoneinfo import ZoneInfo
 from datetime import datetime, timedelta
 
-def getTaiwanTime(ms: bool = False) -> str:
+def getTaiwanTimeString(ms: bool = False) -> str:
     """
     取得台灣目前時間。
     Args:
@@ -18,6 +18,15 @@ def getTaiwanTime(ms: bool = False) -> str:
     else:
         # YYYY-MM-DD HH:MM:SS
         return base_time
+    
+def getTaiwanTime() -> datetime:
+    """
+    取得台灣目前時間。
+    Returns: 
+        str: datetime 物件
+    """
+    taiwan_now = datetime.now(ZoneInfo("Asia/Taipei"))
+    return taiwan_now
     
 def getFutureTime() -> dict:
     """
