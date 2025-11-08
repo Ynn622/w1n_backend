@@ -1,0 +1,12 @@
+openai
+openai-agents
+yfinance
+beautifulsoup4
+lxml
+cloudscraper
+python-dotenv
+fastapi
+uvicorn[standard]
+python-multipart
+supabase
+huggingface_hub
