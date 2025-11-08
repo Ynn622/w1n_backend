@@ -47,10 +47,10 @@ def windspeed_taipei():
         dataset = data['cwaopendata']['dataset']
         locations = dataset['Station']
         
-        print(f"共有 {len(locations)} 個測站")
-        print("\n" + "="*150)
-        print(f"{'測站名稱':<12} {'測站ID':<10} {'天氣':<8} {'風速':<8} {'風向':<8} {'氣溫':<8} {'濕度%':<8} {'緯度':<12} {'經度':<12} {'地址':<15}")
-        print("="*150)
+        #print(f"共有 {len(locations)} 個測站")
+        #print("\n" + "="*150)
+        #print(f"{'測站名稱':<12} {'測站ID':<10} {'天氣':<8} {'風速':<8} {'風向':<8} {'氣溫':<8} {'濕度%':<8} {'緯度':<12} {'經度':<12} {'地址':<15}")
+        #print("="*150)
         
         # 提取台北市的風速資料
         taipei_windspeed = []
@@ -107,31 +107,31 @@ def windspeed_taipei():
                     temp_str = f"{air_temp}°C" if air_temp != '-99' else "N/A"
                     humidity_str = f"{relative_humidity}%" if relative_humidity != '-99' else "N/A"
                     wind_dir_str = f"{wind_direction_text}({wind_direction}°)" if wind_direction != '-99' and wind_direction_text else "N/A"
-                    print(f"{station_name:<12} {station_id:<10} {weather_str:<8} {wind_speed:<8} {wind_dir_str:<12} {temp_str:<8} {humidity_str:<8} {lat_str:<12} {lon_str:<12} {county}{town:<10}")
+                    #print(f"{station_name:<12} {station_id:<10} {weather_str:<8} {wind_speed:<8} {wind_dir_str:<12} {temp_str:<8} {humidity_str:<8} {lat_str:<12} {lon_str:<12} {county}{town:<10}")
         
-        print("="*150)
-        print(f"\n台北市有效資料筆數: {len(taipei_windspeed)}")
+        #print("="*150)
+        #print(f"\n台北市有效資料筆數: {len(taipei_windspeed)}")
         
         if len(taipei_windspeed) > 0:
             # 計算統計資訊
             wind_speeds = [d['wind_speed'] for d in taipei_windspeed]
-            print(f"平均風速: {sum(wind_speeds)/len(wind_speeds):.2f} m/s")
-            print(f"最大風速: {max(wind_speeds):.2f} m/s")
-            print(f"最小風速: {min(wind_speeds):.2f} m/s")
+            #print(f"平均風速: {sum(wind_speeds)/len(wind_speeds):.2f} m/s")
+            #print(f"最大風速: {max(wind_speeds):.2f} m/s")
+            #print(f"最小風速: {min(wind_speeds):.2f} m/s")
             
             # 找出風速最大的測站
             max_station = max(taipei_windspeed, key=lambda x: x['wind_speed'])
-            print(f"\n風速最大測站: {max_station['station_name']} ({max_station['town']}) - {max_station['wind_speed']} m/s")
+            #print(f"\n風速最大測站: {max_station['station_name']} ({max_station['town']}) - {max_station['wind_speed']} m/s")
             
             # 找出風速最小的測站
             min_station = min(taipei_windspeed, key=lambda x: x['wind_speed'])
-            print(f"風速最小測站: {min_station['station_name']} ({min_station['town']}) - {min_station['wind_speed']} m/s")
+            #print(f"風速最小測站: {min_station['station_name']} ({min_station['town']}) - {min_station['wind_speed']} m/s")
             
             # 按風速排序
             taipei_windspeed_sorted = sorted(taipei_windspeed, key=lambda x: x['wind_speed'], reverse=True)
             
-            print(f"\n台北市各測站風速排名 (由高到低):")
-            print("-" * 150)
+            #print(f"\n台北市各測站風速排名 (由高到低):")
+            #print("-" * 150)
             for i, station in enumerate(taipei_windspeed_sorted, 1):
                 lat = f"{station['latitude']:.6f}" if station['latitude'] else "N/A"
                 lon = f"{station['longitude']:.6f}" if station['longitude'] else "N/A"
@@ -141,13 +141,7 @@ def windspeed_taipei():
                 wind_dir_text = station.get('wind_direction', '')
                 wind_dir_degree = station.get('wind_direction_degree')
                 wind_dir = f"{wind_dir_text}({wind_dir_degree:.0f}°)" if wind_dir_text and wind_dir_degree else "N/A"
-                print(f"{i:2d}. {station['station_name']:<12} {station['town']:<10} {weather:<8} 風速:{station['wind_speed']:>4.1f}m/s 風向:{wind_dir:<15} 溫度:{temp:<8} 濕度:{humidity:<6} 緯度:{lat:<11} 經度:{lon:<11}")
-            
-            # 儲存為 JSON
-            with open('taipei_windspeed.json', 'w', encoding='utf-8') as f:
-                json.dump(taipei_windspeed_sorted, f, ensure_ascii=False, indent=2)
-            
-            print("\n✓ 資料已儲存至 taipei_windspeed.json")
+                #print(f"{i:2d}. {station['station_name']:<12} {station['town']:<10} {weather:<8} 風速:{station['wind_speed']:>4.1f}m/s 風向:{wind_dir:<15} 溫度:{temp:<8} 濕度:{humidity:<6} 緯度:{lat:<11} 經度:{lon:<11}")
         return taipei_windspeed
     else:
         print(f"HTTP 請求失敗,狀態碼:{response.status_code}")
